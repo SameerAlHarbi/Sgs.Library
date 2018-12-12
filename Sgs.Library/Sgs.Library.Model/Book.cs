@@ -1,6 +1,7 @@
 ﻿using Sameer.Shared;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sgs.Library.Model
 {
@@ -28,6 +29,7 @@ namespace Sgs.Library.Model
 
         [Required(ErrorMessage = "Price is Required !")]
         [Range(0, 10000000, ErrorMessage = "Unvalid Price !")]
+        [Column(TypeName ="Money")]
         public virtual decimal Price { get; set; }
 
         [Required(ErrorMessage = "Quantity is Required !")]
