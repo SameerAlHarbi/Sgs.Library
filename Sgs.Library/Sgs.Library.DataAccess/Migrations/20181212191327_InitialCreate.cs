@@ -9,6 +9,27 @@ namespace Sgs.Library.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Books",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 500, nullable: false),
+                    Author = table.Column<string>(maxLength: 200, nullable: false),
+                    Code = table.Column<string>(maxLength: 30, nullable: false),
+                    ReleaseYaer = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(type: "Money", nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    RowNumber = table.Column<string>(maxLength: 5, nullable: false),
+                    ShelfNumber = table.Column<string>(maxLength: 5, nullable: false),
+                    ColumnNumber = table.Column<string>(maxLength: 5, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Books", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MapsTypes",
                 columns: table => new
                 {
@@ -19,6 +40,28 @@ namespace Sgs.Library.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MapsTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Periodicals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 500, nullable: false),
+                    Author = table.Column<string>(maxLength: 200, nullable: false),
+                    Code = table.Column<string>(maxLength: 30, nullable: false),
+                    ReleaseYaer = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(type: "Money", nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    RowNumber = table.Column<string>(maxLength: 5, nullable: false),
+                    ShelfNumber = table.Column<string>(maxLength: 5, nullable: false),
+                    ColumnNumber = table.Column<string>(maxLength: 5, nullable: false),
+                    PeriodicalDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Periodicals", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,7 +78,7 @@ namespace Sgs.Library.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Books",
+                name: "Maps",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -49,33 +92,52 @@ namespace Sgs.Library.DataAccess.Migrations
                     RowNumber = table.Column<string>(maxLength: 5, nullable: false),
                     ShelfNumber = table.Column<string>(maxLength: 5, nullable: false),
                     ColumnNumber = table.Column<string>(maxLength: 5, nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    ArabicName = table.Column<string>(maxLength: 500, nullable: true),
-                    MapTypeId = table.Column<int>(nullable: true),
-                    MapSize = table.Column<string>(maxLength: 15, nullable: true),
-                    Abstract = table.Column<string>(nullable: true),
-                    HasAttachment = table.Column<bool>(nullable: true),
+                    ArabicName = table.Column<string>(maxLength: 500, nullable: false),
+                    MapTypeId = table.Column<int>(nullable: false),
+                    MapSize = table.Column<string>(maxLength: 15, nullable: false),
+                    Abstract = table.Column<string>(nullable: false),
+                    HasAttachment = table.Column<bool>(nullable: false),
                     Region = table.Column<string>(maxLength: 30, nullable: true),
-                    Status = table.Column<string>(nullable: true),
-                    PeriodicalDate = table.Column<DateTime>(nullable: true),
-                    Report_Region = table.Column<string>(maxLength: 30, nullable: true),
-                    ReportTypeId = table.Column<int>(nullable: true),
-                    Report_HasAttachment = table.Column<bool>(nullable: true),
-                    Report_Abstract = table.Column<string>(maxLength: 500, nullable: true),
-                    Note = table.Column<string>(maxLength: 300, nullable: true),
-                    Report_Status = table.Column<string>(nullable: true)
+                    Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.Id);
+                    table.PrimaryKey("PK_Maps", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Books_MapsTypes_MapTypeId",
+                        name: "FK_Maps_MapsTypes_MapTypeId",
                         column: x => x.MapTypeId,
                         principalTable: "MapsTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 500, nullable: false),
+                    Author = table.Column<string>(maxLength: 200, nullable: false),
+                    ReleaseYaer = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(type: "Money", nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    RowNumber = table.Column<string>(maxLength: 5, nullable: false),
+                    ShelfNumber = table.Column<string>(maxLength: 5, nullable: false),
+                    ColumnNumber = table.Column<string>(maxLength: 5, nullable: false),
+                    Code = table.Column<string>(maxLength: 30, nullable: false),
+                    Region = table.Column<string>(maxLength: 30, nullable: true),
+                    ReportTypeId = table.Column<int>(nullable: false),
+                    HasAttachment = table.Column<bool>(nullable: false),
+                    Abstract = table.Column<string>(maxLength: 500, nullable: false),
+                    Note = table.Column<string>(maxLength: 300, nullable: true),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Books_ReportsTypes_ReportTypeId",
+                        name: "FK_Reports_ReportsTypes_ReportTypeId",
                         column: x => x.ReportTypeId,
                         principalTable: "ReportsTypes",
                         principalColumn: "Id",
@@ -107,34 +169,24 @@ namespace Sgs.Library.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Borrowings_Books_MapId",
+                        name: "FK_Borrowings_Maps_MapId",
                         column: x => x.MapId,
-                        principalTable: "Books",
+                        principalTable: "Maps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Borrowings_Books_PeriodicalId",
+                        name: "FK_Borrowings_Periodicals_PeriodicalId",
                         column: x => x.PeriodicalId,
-                        principalTable: "Books",
+                        principalTable: "Periodicals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Borrowings_Books_ReportId",
+                        name: "FK_Borrowings_Reports_ReportId",
                         column: x => x.ReportId,
-                        principalTable: "Books",
+                        principalTable: "Reports",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Books_MapTypeId",
-                table: "Books",
-                column: "MapTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Books_ReportTypeId",
-                table: "Books",
-                column: "ReportTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Borrowings_BookId",
@@ -155,6 +207,16 @@ namespace Sgs.Library.DataAccess.Migrations
                 name: "IX_Borrowings_ReportId",
                 table: "Borrowings",
                 column: "ReportId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Maps_MapTypeId",
+                table: "Maps",
+                column: "MapTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_ReportTypeId",
+                table: "Reports",
+                column: "ReportTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -164,6 +226,15 @@ namespace Sgs.Library.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Books");
+
+            migrationBuilder.DropTable(
+                name: "Maps");
+
+            migrationBuilder.DropTable(
+                name: "Periodicals");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "MapsTypes");

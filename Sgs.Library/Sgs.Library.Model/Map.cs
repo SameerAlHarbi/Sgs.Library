@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sgs.Library.Model
 {
-    public class Map : Book
+    public class Map : SgsRelese
     {
 
         [Required(ErrorMessage = "{0} is Required !")]
