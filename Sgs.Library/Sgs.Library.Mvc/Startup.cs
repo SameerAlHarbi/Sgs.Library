@@ -36,11 +36,17 @@ namespace Sgs.Library.Mvc
 
             services.AddScoped<BooksManager>();
 
+            services.AddScoped<MapsManager>();
 
+            services.AddScoped<ReportsManager>();
 
+            services.AddScoped<PeriodicalsManager>();
 
+            services.AddScoped<BorrowingsManager>();
 
+            services.AddScoped<MapsTypesManager>();
 
+            services.AddScoped<ReportsTypesManager>();
 
             services.AddSingleton<IAppInfo, AppInfoManager>();
 
@@ -58,6 +64,7 @@ namespace Sgs.Library.Mvc
             }
 
             app.UseStaticFiles();
+
             app.UseNodeModules(env.ContentRootPath);
 
             app.UseMvc(configureRoute);

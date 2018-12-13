@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sgs.Library.Model;
 using Sgs.Library.BusinessLogic;
+using Sgs.Library.Mvc.Services;
 
 namespace Sgs.Library.Mvc.Controllers
 {
@@ -21,7 +22,6 @@ namespace Sgs.Library.Mvc.Controllers
         public async Task<IActionResult> Index()
         {
             var booksList = await _booksManager.GetAllAsNoTrackingListAsync();
-
             return View(booksList);
         }
     }

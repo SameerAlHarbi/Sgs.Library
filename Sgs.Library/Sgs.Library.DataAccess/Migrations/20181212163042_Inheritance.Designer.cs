@@ -10,8 +10,8 @@ using Sgs.Library.DataAccess;
 namespace Sgs.Library.DataAccess.Migrations
 {
     [DbContext(typeof(LibraryDB))]
-    [Migration("20181212145108_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20181212163042_Inheritance")]
+    partial class Inheritance
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

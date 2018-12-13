@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Sgs.Library.DataAccess.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Inheritance : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
