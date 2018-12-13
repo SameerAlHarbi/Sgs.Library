@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sgs.Library.Model
 {
-    public class Report : Book
+    public class Report : SgsRelese
     {
 
         [Required(ErrorMessage = "{0} is Required !")]

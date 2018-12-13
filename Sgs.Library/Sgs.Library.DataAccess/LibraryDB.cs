@@ -26,10 +26,6 @@ namespace Sgs.Library.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Book>().ToTable("Books");
-            modelBuilder.Entity<Map>().ToTable("Maps");
-            modelBuilder.Entity<Report>().ToTable("Reports");
-            modelBuilder.Entity<Periodical>().ToTable("Periodicals");
         }
 
     }

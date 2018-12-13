@@ -37,9 +37,6 @@ namespace Sgs.Library.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(5);
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(500);
@@ -62,8 +59,6 @@ namespace Sgs.Library.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Book");
                 });
 
             modelBuilder.Entity("Sgs.Library.Model.Borrow", b =>
@@ -101,6 +96,70 @@ namespace Sgs.Library.DataAccess.Migrations
                     b.ToTable("Borrowings");
                 });
 
+            modelBuilder.Entity("Sgs.Library.Model.Map", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Abstract")
+                        .IsRequired();
+
+                    b.Property<string>("ArabicName")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<string>("ColumnNumber")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.Property<bool>("HasAttachment");
+
+                    b.Property<string>("MapSize")
+                        .IsRequired()
+                        .HasMaxLength(15);
+
+                    b.Property<int>("MapTypeId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("Money");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<string>("Region")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("ReleaseYaer");
+
+                    b.Property<string>("RowNumber")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.Property<string>("ShelfNumber")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.Property<string>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MapTypeId");
+
+                    b.ToTable("Maps");
+                });
+
             modelBuilder.Entity("Sgs.Library.Model.MapType", b =>
                 {
                     b.Property<int>("Id")
@@ -116,6 +175,110 @@ namespace Sgs.Library.DataAccess.Migrations
                     b.ToTable("MapsTypes");
                 });
 
+            modelBuilder.Entity("Sgs.Library.Model.Periodical", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<string>("ColumnNumber")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("PeriodicalDate");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("Money");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<int>("ReleaseYaer");
+
+                    b.Property<string>("RowNumber")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.Property<string>("ShelfNumber")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Periodicals");
+                });
+
+            modelBuilder.Entity("Sgs.Library.Model.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Abstract")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<string>("ColumnNumber")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.Property<bool>("HasAttachment");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(300);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("Money");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<string>("Region")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("ReleaseYaer");
+
+                    b.Property<int>("ReportTypeId");
+
+                    b.Property<string>("RowNumber")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.Property<string>("ShelfNumber")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.Property<string>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportTypeId");
+
+                    b.ToTable("Reports");
+                });
+
             modelBuilder.Entity("Sgs.Library.Model.ReportType", b =>
                 {
                     b.Property<int>("Id")
@@ -129,79 +292,6 @@ namespace Sgs.Library.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ReportsTypes");
-                });
-
-            modelBuilder.Entity("Sgs.Library.Model.Map", b =>
-                {
-                    b.HasBaseType("Sgs.Library.Model.Book");
-
-                    b.Property<string>("Abstract")
-                        .IsRequired();
-
-                    b.Property<string>("ArabicName")
-                        .IsRequired()
-                        .HasMaxLength(500);
-
-                    b.Property<bool>("HasAttachment");
-
-                    b.Property<string>("MapSize")
-                        .IsRequired()
-                        .HasMaxLength(15);
-
-                    b.Property<int>("MapTypeId");
-
-                    b.Property<string>("Region")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("Status");
-
-                    b.HasIndex("MapTypeId");
-
-                    b.ToTable("Maps");
-
-                    b.HasDiscriminator().HasValue("Map");
-                });
-
-            modelBuilder.Entity("Sgs.Library.Model.Periodical", b =>
-                {
-                    b.HasBaseType("Sgs.Library.Model.Book");
-
-                    b.Property<DateTime>("PeriodicalDate");
-
-                    b.ToTable("Periodicals");
-
-                    b.HasDiscriminator().HasValue("Periodical");
-                });
-
-            modelBuilder.Entity("Sgs.Library.Model.Report", b =>
-                {
-                    b.HasBaseType("Sgs.Library.Model.Book");
-
-                    b.Property<string>("Abstract")
-                        .IsRequired()
-                        .HasColumnName("Report_Abstract")
-                        .HasMaxLength(500);
-
-                    b.Property<bool>("HasAttachment")
-                        .HasColumnName("Report_HasAttachment");
-
-                    b.Property<string>("Note")
-                        .HasMaxLength(300);
-
-                    b.Property<string>("Region")
-                        .HasColumnName("Report_Region")
-                        .HasMaxLength(30);
-
-                    b.Property<int>("ReportTypeId");
-
-                    b.Property<string>("Status")
-                        .HasColumnName("Report_Status");
-
-                    b.HasIndex("ReportTypeId");
-
-                    b.ToTable("Reports");
-
-                    b.HasDiscriminator().HasValue("Report");
                 });
 
             modelBuilder.Entity("Sgs.Library.Model.Borrow", b =>
