@@ -4,12 +4,26 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link href="~/Styles/MainStyle.css" rel="stylesheet" />
     <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" 
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
-<body>
-    <button class="btn btn-dark"> test</button>
-    <div>
-        @RenderBody()
+<body style="background-image: url('../Images/bgLibrary.jpg')">
+    <br/>
+    <div class="container" style="background:rgb(255, 255, 255,0.6);border:2px;margin-bottom:25px;
+                      border-color:gray; border-radius:10px;box-shadow:2px 2px 20px 2px grey">
+        @Html.Partial("_Navbar")
+
+        <div>
+            @RenderBody()
+        </div>
+
+        @Html.Partial("_Footer")
     </div>
+     
+
+    <script src="~/Scripts/app.js"></script>
 </body>
 </html>

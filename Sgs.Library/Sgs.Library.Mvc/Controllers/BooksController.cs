@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sgs.Library.Model;
 using Sgs.Library.BusinessLogic;
-using Sgs.Library.Mvc.Services;
+using System.Threading.Tasks;
 
 namespace Sgs.Library.Mvc.Controllers
 {
