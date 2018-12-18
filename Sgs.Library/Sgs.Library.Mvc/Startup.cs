@@ -35,20 +35,17 @@ namespace Sgs.Library.Mvc
             services.AddScoped<IRepository, Repository<LibraryDB>>();
 
             services.AddScoped<BooksManager>();
-
             services.AddScoped<MapsManager>();
-
             services.AddScoped<ReportsManager>();
-
             services.AddScoped<PeriodicalsManager>();
-
             services.AddScoped<BorrowingsManager>();
-
             services.AddScoped<MapsTypesManager>();
-
             services.AddScoped<ReportsTypesManager>();
-
             services.AddSingleton<IAppInfo, AppInfoManager>();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<ISmsSender, SmsSender>();
 
             services.AddAutoMapper();
 
@@ -68,16 +65,10 @@ namespace Sgs.Library.Mvc
             app.UseNodeModules(env.ContentRootPath);
 
             app.UseMvc(configureRoute);
-
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("not found");
-            });
         }
 
         private void configureRoute(IRouteBuilder routeBuilder)
         {
-            //routeBuilder.MapRoute("managers", "managers/{action=index}/{id?}", defaults: new { controller = "users" });
             routeBuilder.MapRoute("Default", "{controller=home}/{action=index}/{id?}");
         }
     }

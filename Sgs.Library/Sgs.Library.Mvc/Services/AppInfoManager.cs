@@ -13,8 +13,7 @@ namespace Sgs.Library.Mvc.Services
 
         public string GetAppName()
         {
-            //return _config["AppName"];
-            return "My Library";
+            return _config["AppName"];
         }
     }
 }
