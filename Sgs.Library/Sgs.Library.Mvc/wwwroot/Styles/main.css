@@ -16,3 +16,35 @@
 main {
     min-height: 450px;
 }
+
+#CountDivTop {
+    position: relative;
+    animation: newmovetop 2s 1;
+    -webkit-animation: newmovetop 2s 1;
+}
+
+#CountDivBot {
+    position: relative;
+    animation: newmoveb 2s 1;
+    -webkit-animation: newmoveb 2s 1;
+}
+
+@-webkit-keyframes newmovetop{
+    from {top: 100px; background-color:#ff6a00;}
+    to {top: 0px;}
+}
+
+@keyframes newmovetop {
+    from {top: 100px;}
+    to {top: 0px;}
+}
+
+@-webkit-keyframes newmoveb {
+    from {top: 70px;}
+    to {top: 0px;}
+}
+
+@keyframes newmoveb {
+    from {top: 70px;}
+    to {top: 0px;}
+}
