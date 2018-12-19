@@ -16,8 +16,9 @@ namespace Sgs.Library.Mvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var booksList = await _booksManager.GetAllAsNoTrackingListAsync();
-            return View(booksList);
+            //var booksList = await _booksManager.GetAllAsNoTrackingListAsync();
+            //return View(booksList);
+            return View();
         }
     }
 }
