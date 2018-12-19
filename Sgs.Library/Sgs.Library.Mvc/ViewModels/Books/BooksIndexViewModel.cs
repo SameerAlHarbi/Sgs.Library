@@ -7,5 +7,6 @@ namespace Sgs.Library.Mvc.ViewModels.Books
 {
     public class BooksIndexViewModel
     {
+        public List<BookViewModel> BooksList { get; set; }
     }
 }
