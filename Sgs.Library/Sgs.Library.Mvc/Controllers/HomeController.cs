@@ -25,7 +25,11 @@ namespace Sgs.Library.Mvc.Controllers
                 BooksCount=5000,
                 MapsCount=3500,
                 ReportsCount=6300,
-                PeriodicalsCount=580
+                PeriodicalsCount=580,
+                BooksCountBorrower=925,
+                MapsCountBorrower=556,
+                ReportsCountBorrower=1650,
+                PeriodicalsCountBorrower=377
             };
             return View(vm);
         }
