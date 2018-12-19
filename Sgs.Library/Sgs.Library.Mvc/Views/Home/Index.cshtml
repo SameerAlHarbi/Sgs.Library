@@ -1,12 +1,12 @@
 ﻿@model HomeIndexViewModel
 
-<div id="TitleHeader" class="row" style="padding-top:40px;margin:30px 30px 15px 30px" >
+<div id="TitleHeader" class="row" style="padding-top:40px;margin:30px 30px 15px 30px">
     <div class="col-md-5 offset-md-1">
         <img width="275px" height="180px" src="~/Images/SGSLOGO.png" />
     </div>
     <div class="col-md-6 justify-content-center align-self-center text-center" style="font-size:xx-large">
         <div> Library of Saudi Geological Survey</div>
-    </div> 
+    </div>
 </div>
 <div id="CountDivTop" class="row text-center" style="padding-top:100px">
 
@@ -40,3 +40,172 @@
 </div>
 <i class=""></i>
 <br /><br />
+
+@section header{
+
+    <style>
+
+        #CountDivTop {
+            position: relative;
+            animation: movetop 3s 1;
+            -webkit-animation: movetop 3s 1;
+        }
+
+        #TitleHeader {
+            position: relative;
+            animation: tileHeader 3s 1;
+            -webkit-animation: tileHeader 3s 1;
+        }
+
+        @@-webkit-keyframes movetop {
+            from {
+                top: 100px;
+                opacity: 0
+            }
+
+            to {
+                top: 0px;
+                opacity: 1
+            }
+        }
+
+        @@keyframes movetop {
+            from {
+                top: 100px;
+                opacity: 0
+            }
+
+            to {
+                top: 0px;
+                opacity: 1
+            }
+        }
+
+        @@-webkit-keyframes tileHeader {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @@keyframes tileHeader {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+    </style>
+
+}
+
+@section scripts{
+
+    <script>
+
+        (function () {
+
+            $(function () {
+
+                $({ BookCounter: 0 }).animate({
+                    BookCounter: $('.bookCounter').text()
+                }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            $('.bookCounter').text(Math.ceil(this.BookCounter));
+                        }
+                    });
+
+                $({ ReportCounter: 0 }).animate({
+                    ReportCounter: $('.reportCounter').text()
+                }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            $('.reportCounter').text(Math.ceil(this.ReportCounter));
+                        }
+                    });
+
+                $({ MapCounter: 0 }).animate({
+                    MapCounter: $('.mapCounter').text()
+                }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            $('.mapCounter').text(Math.ceil(this.MapCounter));
+                        }
+                    });
+
+                $({
+                    PeriodicalCounter: 0
+                }).animate({
+                    PeriodicalCounter: $('.periodicalCounter').text()
+                }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            $('.periodicalCounter').text(Math.ceil(this.PeriodicalCounter));
+                        }
+                    });
+
+                //// counter borrower
+
+                $({
+                    BorrowerBook: 0
+                }).animate({
+                    BorrowerBook: $('.borrowerBook').text()
+                }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            $('.borrowerBook').text(Math.ceil(this.BorrowerBook));
+                        }
+                    });
+
+                $({
+                    BorrowerReport: 0
+                }).animate({
+                    BorrowerReport: $('.borrowerReport').text()
+                }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            $('.borrowerReport').text(Math.ceil(this.BorrowerReport));
+                        }
+                    });
+
+                $({
+                    BorrowerMap: 0
+                }).animate({
+                    BorrowerMap: $('.borrowerMap').text()
+                }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            $('.borrowerMap').text(Math.ceil(this.BorrowerMap));
+                        }
+                    });
+
+                $({
+                    BorrowerPeriodical: 0
+                }).animate({
+                    BorrowerPeriodical: $('.borrowerPeriodical').text()
+                }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            $('.borrowerPeriodical').text(Math.ceil(this.BorrowerPeriodical));
+                        }
+                    });
+            });
+        })();
+
+    </script>
+
+}
