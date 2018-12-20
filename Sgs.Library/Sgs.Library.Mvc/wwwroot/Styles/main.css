@@ -1,4 +1,6 @@
-﻿body {
+﻿@import url("animations.css");
+
+body {
     background-image: url('../Images/bgLibrary.jpg');
     background-repeat: repeat;
 }
@@ -16,3 +18,4 @@
 main {
     min-height: 450px;
 }
+

@@ -1,6 +1,6 @@
 ﻿@model HomeIndexViewModel
 
-<div id="TitleHeader" class="row" style="padding-top:40px;margin:30px 30px 15px 30px">
+<div class="row fadeIn" style="padding-top:40px;margin:30px 30px 15px 30px">
     <div class="col-md-5 offset-md-1">
         <img width="275px" height="180px" src="~/Images/SGSLOGO.png" />
     </div>
@@ -8,34 +8,34 @@
         <div> Library of Saudi Geological Survey</div>
     </div>
 </div>
-<div id="CountDivTop" class="row text-center" style="padding-top:100px">
 
+<div class="row text-center moveUp" style="padding-top:100px;">
     <div class="col-md-3">
         <i class="fas fa-book" style="font-size: 75px; color: #5eaaa8;"></i>
-        <div style="color:#5eaaa8"> <span class="bookCounter" style="font-size:xx-large;" data-animate>@Model.BooksCount</span><small>Books</small></div>
+        <div style="color:#5eaaa8"> <span class="bookCounter" style="font-size:xx-large;" data-animate-number>@Model.BooksCount</span><small>Books</small></div>
         <hr style="margin-bottom:0px;background-color:#ccdede" />
-        <div style="color:#5eaaa8"><span class="borrowerBook" style="font-size:large">@Model.BooksCountBorrower </span><small> Borrower</small></div>
+        <div style="color:#5eaaa8"><span class="borrowerBook" style="font-size:large" data-animate-number>@Model.BooksCountBorrower </span><small> Borrower</small></div>
     </div>
 
     <div class="col-md-3">
         <i class="far fa-file-alt" style="font-size: 75px; color: #4c8a89;"></i>
-        <div style="color:#4c8a89"> <span class="reportCounter" style="font-size:xx-large;">@Model.ReportsCount</span><small>Reports</small> </div>
+        <div style="color:#4c8a89"> <span class="reportCounter" style="font-size:xx-large;" data-animate-number>@Model.ReportsCount</span><small>Reports</small> </div>
         <hr style="margin-bottom:0px;background-color:#ccdede" />
-        <div style="color:#4c8a89"><span class="borrowerReport" style="font-size:large">@Model.ReportsCountBorrower </span><small> Borrower</small></div>
+        <div style="color:#4c8a89"><span class="borrowerReport" style="font-size:large" data-animate-number>@Model.ReportsCountBorrower </span><small> Borrower</small></div>
     </div>
 
     <div class="col-md-3">
         <i class="fas fa-map" style="font-size: 75px; color: #5eaaa8;"></i>
-        <div style="color:#5eaaa8"><span class="mapCounter" style="font-size:xx-large;">@Model.MapsCount</span><small>Maps</small> </div>
+        <div style="color:#5eaaa8"><span class="mapCounter" style="font-size:xx-large;" data-animate-number>@Model.MapsCount</span><small>Maps</small> </div>
         <hr style="margin-bottom:0px;background-color:#ccdede" />
-        <div style="color:#5eaaa8"><span class="borrowerMap" style="font-size:large">@Model.MapsCountBorrower </span><small> Borrower</small></div>
+        <div style="color:#5eaaa8"><span class="borrowerMap" style="font-size:large" data-animate-number>@Model.MapsCountBorrower </span><small> Borrower</small></div>
     </div>
 
     <div class="col-md-3">
         <i class="far fa-newspaper" style="font-size: 75px; color: #4c8a89;"></i>
-        <div style="color:#4c8a89"><span class="periodicalCounter" style="font-size:xx-large;">@Model.PeriodicalsCount</span><small>Periodicals</small> </div>
+        <div style="color:#4c8a89"><span class="periodicalCounter" style="font-size:xx-large;" data-animate-number>@Model.PeriodicalsCount</span><small>Periodicals</small> </div>
         <hr style="margin-bottom:0px;background-color:#ccdede" />
-        <div style="color:#4c8a89"><span class="borrowerPeriodical" style="font-size:large">@Model.PeriodicalsCountBorrower </span><small> Borrower</small></div>
+        <div style="color:#4c8a89"><span class="borrowerPeriodical" style="font-size:large" data-animate-number>@Model.PeriodicalsCountBorrower </span><small> Borrower</small></div>
     </div>
 </div>
 <i class=""></i>
@@ -45,61 +45,8 @@
 
     <style>
 
-        #CountDivTop {
-            position: relative;
-            animation: movetop 3s 1;
-            -webkit-animation: movetop 3s 1;
-        }
 
-        #TitleHeader {
-            position: relative;
-            animation: tileHeader 3s 1;
-            -webkit-animation: tileHeader 3s 1;
-        }
 
-        @@-webkit-keyframes movetop {
-            from {
-                top: 100px;
-                opacity: 0
-            }
-
-            to {
-                top: 0px;
-                opacity: 1
-            }
-        }
-
-        @@keyframes movetop {
-            from {
-                top: 100px;
-                opacity: 0
-            }
-
-            to {
-                top: 0px;
-                opacity: 1
-            }
-        }
-
-        @@-webkit-keyframes tileHeader {
-            from {
-                opacity: 0
-            }
-
-            to {
-                opacity: 1
-            }
-        }
-
-        @@keyframes tileHeader {
-            from {
-                opacity: 0
-            }
-
-            to {
-                opacity: 1
-            }
-        }
     </style>
 
 }
@@ -110,142 +57,9 @@
 
         (function () {
 
-            function animateNumbers() {
-                $({ BookCounter: 0 }).animate({
-                    BookCounter: $('.bookCounter').text()
-                }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            $('.bookCounter').text(Math.ceil(this.BookCounter));
-                        }
-                    });
-
-                $({ ReportCounter: 0 }).animate({
-                    ReportCounter: $('.reportCounter').text()
-                }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            $('.reportCounter').text(Math.ceil(this.ReportCounter));
-                        }
-                    });
-
-                $({ MapCounter: 0 }).animate({
-                    MapCounter: $('.mapCounter').text()
-                }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            $('.mapCounter').text(Math.ceil(this.MapCounter));
-                        }
-                    });
-
-                $({
-                    PeriodicalCounter: 0
-                }).animate({
-                    PeriodicalCounter: $('.periodicalCounter').text()
-                }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            $('.periodicalCounter').text(Math.ceil(this.PeriodicalCounter));
-                        }
-                    });
-
-                //// counter borrower
-
-                $({
-                    BorrowerBook: 0
-                }).animate({
-                    BorrowerBook: $('.borrowerBook').text()
-                }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            $('.borrowerBook').text(Math.ceil(this.BorrowerBook));
-                        }
-                    });
-
-                $({
-                    BorrowerReport: 0
-                }).animate({
-                    BorrowerReport: $('.borrowerReport').text()
-                }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            $('.borrowerReport').text(Math.ceil(this.BorrowerReport));
-                        }
-                    });
-
-                $({
-                    BorrowerMap: 0
-                }).animate({
-                    BorrowerMap: $('.borrowerMap').text()
-                }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            $('.borrowerMap').text(Math.ceil(this.BorrowerMap));
-                        }
-                    });
-
-                $({
-                    BorrowerPeriodical: 0
-                }).animate({
-                    BorrowerPeriodical: $('.borrowerPeriodical').text()
-                }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            $('.borrowerPeriodical').text(Math.ceil(this.BorrowerPeriodical));
-                        }
-                    });
-            }
-
             $(function () {
 
-                //animateNumbers();
 
-                //$({ BookCounter: 0 }).animate({
-                //    BookCounter: $('.bookCounter').text()
-                //}, {
-                //        duration: 2900,
-                //        easing: 'swing',
-                //        step: function () {
-                //            $('.bookCounter').text(Math.ceil(this.BookCounter));
-                //        }
-                //    });
-
-                $('[data-animate]').each(function () {
-
-                    this.animate({
-                    BookCounter: $('.bookCounter').text()
-                    }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            $('.bookCounter').text(Math.ceil(this.BookCounter));
-                        }
-                    });
-
-                });
-
-
-                $({ counter: 0 }).animate({
-                    counter: 10000
-                }, {
-                        duration: 2900,
-                        easing: 'swing',
-                        step: function () {
-                            var me = this;
-                            $('[data-animate]').each(function () {
-                                if()
-                                $(this).text(Math.ceil(me.counter));
-                            });
-                        }
-                    });
 
             });
 
