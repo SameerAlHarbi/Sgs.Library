@@ -12,7 +12,7 @@
 
     <div class="col-md-3">
         <i class="fas fa-book" style="font-size: 75px; color: #5eaaa8;"></i>
-        <div style="color:#5eaaa8"> <span class="bookCounter" style="font-size:xx-large;">@Model.BooksCount</span><small>Books</small></div>
+        <div style="color:#5eaaa8"> <span class="bookCounter" style="font-size:xx-large;" data-animate>@Model.BooksCount</span><small>Books</small></div>
         <hr style="margin-bottom:0px;background-color:#ccdede" />
         <div style="color:#5eaaa8"><span class="borrowerBook" style="font-size:large">@Model.BooksCountBorrower </span><small> Borrower</small></div>
     </div>
@@ -110,8 +110,7 @@
 
         (function () {
 
-            $(function () {
-
+            function animateNumbers() {
                 $({ BookCounter: 0 }).animate({
                     BookCounter: $('.bookCounter').text()
                 }, {
@@ -203,7 +202,53 @@
                             $('.borrowerPeriodical').text(Math.ceil(this.BorrowerPeriodical));
                         }
                     });
+            }
+
+            $(function () {
+
+                //animateNumbers();
+
+                //$({ BookCounter: 0 }).animate({
+                //    BookCounter: $('.bookCounter').text()
+                //}, {
+                //        duration: 2900,
+                //        easing: 'swing',
+                //        step: function () {
+                //            $('.bookCounter').text(Math.ceil(this.BookCounter));
+                //        }
+                //    });
+
+                $('[data-animate]').each(function () {
+
+                    this.animate({
+                    BookCounter: $('.bookCounter').text()
+                    }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            $('.bookCounter').text(Math.ceil(this.BookCounter));
+                        }
+                    });
+
+                });
+
+
+                $({ counter: 0 }).animate({
+                    counter: 10000
+                }, {
+                        duration: 2900,
+                        easing: 'swing',
+                        step: function () {
+                            var me = this;
+                            $('[data-animate]').each(function () {
+                                if()
+                                $(this).text(Math.ceil(me.counter));
+                            });
+                        }
+                    });
+
             });
+
         })();
 
     </script>
