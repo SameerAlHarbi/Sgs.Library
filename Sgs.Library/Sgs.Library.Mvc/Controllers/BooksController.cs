@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using Sgs.Library.Mvc.ViewModels;
 using Sgs.Library.Model;
+using System.ComponentModel.DataAnnotations;
+using Sameer.Shared.Data;
 
 namespace Sgs.Library.Mvc.Controllers
 {
@@ -40,37 +42,41 @@ namespace Sgs.Library.Mvc.Controllers
             {
                 try
                 {
-                    var book = await _booksManager
-                    .GetAll(b => b.Code.Trim().ToUpper() == model.Code.Trim().ToUpper())
-                    .FirstOrDefaultAsync();
+                    _logger.LogInformation("Creating a new book !");
 
-                    if (book == null)
+                    var newData = _mapper.Map<Book>(model);
+
+                    using (_booksManager)
                     {
-                        var newBook =  _mapper.Map<Book>(model);
 
-                        var result = await _booksManager.InsertNewAsync(newBook);
+                        var saveResult = await _booksManager.InsertNewAsync(newData);
 
-                        if (result.Status == Sameer.Shared.Data.RepositoryActionStatus.Created)
+                        if (saveResult.Status == RepositoryActionStatus.Created)
                         {
-                            _logger.LogInformation("Book created.");
+                            _logger.LogInformation("Book created successfully.");
                             return RedirectToAction(nameof(BooksController.Index));
                         }
                         else
                         {
-                                ModelState.AddModelError(string.Empty, "Error"); 
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("Code", "Book code is alreadey exist !!");
+                            _logger.LogWarning("Could not save new book to the database !");
+                            ModelState.AddModelError(string.Empty, "Save error please try again later !");
+                        } 
+
                     }
 
                 }
+                catch (ValidationException ex)
+                {
+                    _logger.LogWarning($"validation exception while save new book : {ex.ValidationResult.ErrorMessage}");
+                    ModelState.AddModelError("", ex.ValidationResult.ErrorMessage);
+                }
                 catch (Exception ex)
                 {
+                    _logger.LogError($"Throw exception while save new book : {ex}");
                     ModelState.AddModelError("", "Error happend");
                 }
             }
+
             return View(model);
         }
 
