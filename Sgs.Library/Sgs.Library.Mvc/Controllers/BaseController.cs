@@ -10,8 +10,8 @@ namespace Sgs.Library.Mvc.Controllers
 {
     public class BaseController : Controller
     {
-        IMapper _mapper;
-        ILogger _logger;
+        protected IMapper _mapper;
+        protected ILogger _logger;
 
         public BaseController(IMapper mapper, ILogger logger)
         {

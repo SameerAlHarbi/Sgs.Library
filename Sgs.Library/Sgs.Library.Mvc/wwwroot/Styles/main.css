@@ -1,4 +1,6 @@
-﻿body {
+﻿@import url("animations.css");
+
+body {
     background-image: url('../Images/bgLibrary.jpg');
     background-repeat: repeat;
 }
@@ -17,35 +19,3 @@ main {
     min-height: 450px;
 }
 
-#CountDivTop {
-    position: relative;
-    animation: movetop 3s 1;
-    -webkit-animation: movetop 3s 1;
-}
-
-#TitleHeader {
-    position: relative;
-    animation: tileHeader 3s 1;
-    -webkit-animation: tileHeader 3s 1;
-}
-
-
-@-webkit-keyframes movetop{
-    from {top: 100px; opacity:0}
-    to {top: 0px; opacity:1}
-}
-
-@keyframes movetop {
-    from {top: 100px;opacity: 0}
-    to {top: 0px;opacity: 1}
-}
-
-@-webkit-keyframes tileHeader {
-    from {opacity: 0}
-    to {opacity: 1}
-}
-
-@keyframes tileHeader {
-    from {opacity: 0}
-    to {opacity: 1}
-}

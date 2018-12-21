@@ -1,42 +1,70 @@
 ﻿@model HomeIndexViewModel
 
-<div id="TitleHeader" class="row" style="padding-top:40px;margin:30px 30px 15px 30px" >
+<div class="row fadeIn" style="padding-top:40px;margin:30px 30px 15px 30px">
     <div class="col-md-5 offset-md-1">
         <img width="275px" height="180px" src="~/Images/SGSLOGO.png" />
     </div>
     <div class="col-md-6 justify-content-center align-self-center text-center" style="font-size:xx-large">
         <div> Library of Saudi Geological Survey</div>
-    </div> 
+    </div>
 </div>
-<div id="CountDivTop" class="row text-center" style="padding-top:100px">
 
+<div class="row text-center moveUp" style="padding-top:100px;">
     <div class="col-md-3">
         <i class="fas fa-book" style="font-size: 75px; color: #5eaaa8;"></i>
-        <div style="color:#5eaaa8"> <span class="bookCounter" style="font-size:xx-large;">@Model.BooksCount</span><small>Books</small></div>
+        <div style="color:#5eaaa8"> <span class="bookCounter" style="font-size:xx-large;" data-animate-number>@Model.BooksCount</span><small>Books</small></div>
         <hr style="margin-bottom:0px;background-color:#ccdede" />
-        <div style="color:#5eaaa8"><span class="borrowerBook" style="font-size:large">@Model.BooksCountBorrower </span><small> Borrower</small></div>
+        <div style="color:#5eaaa8"><span class="borrowerBook" style="font-size:large" data-animate-number>@Model.BooksCountBorrower </span><small> Borrower</small></div>
     </div>
 
     <div class="col-md-3">
         <i class="far fa-file-alt" style="font-size: 75px; color: #4c8a89;"></i>
-        <div style="color:#4c8a89"> <span class="reportCounter" style="font-size:xx-large;">@Model.ReportsCount</span><small>Reports</small> </div>
+        <div style="color:#4c8a89"> <span class="reportCounter" style="font-size:xx-large;" data-animate-number>@Model.ReportsCount</span><small>Reports</small> </div>
         <hr style="margin-bottom:0px;background-color:#ccdede" />
-        <div style="color:#4c8a89"><span class="borrowerReport" style="font-size:large">@Model.ReportsCountBorrower </span><small> Borrower</small></div>
+        <div style="color:#4c8a89"><span class="borrowerReport" style="font-size:large" data-animate-number>@Model.ReportsCountBorrower </span><small> Borrower</small></div>
     </div>
 
     <div class="col-md-3">
         <i class="fas fa-map" style="font-size: 75px; color: #5eaaa8;"></i>
-        <div style="color:#5eaaa8"><span class="mapCounter" style="font-size:xx-large;">@Model.MapsCount</span><small>Maps</small> </div>
+        <div style="color:#5eaaa8"><span class="mapCounter" style="font-size:xx-large;" data-animate-number>@Model.MapsCount</span><small>Maps</small> </div>
         <hr style="margin-bottom:0px;background-color:#ccdede" />
-        <div style="color:#5eaaa8"><span class="borrowerMap" style="font-size:large">@Model.MapsCountBorrower </span><small> Borrower</small></div>
+        <div style="color:#5eaaa8"><span class="borrowerMap" style="font-size:large" data-animate-number>@Model.MapsCountBorrower </span><small> Borrower</small></div>
     </div>
 
     <div class="col-md-3">
         <i class="far fa-newspaper" style="font-size: 75px; color: #4c8a89;"></i>
-        <div style="color:#4c8a89"><span class="periodicalCounter" style="font-size:xx-large;">@Model.PeriodicalsCount</span><small>Periodicals</small> </div>
+        <div style="color:#4c8a89"><span class="periodicalCounter" style="font-size:xx-large;" data-animate-number>@Model.PeriodicalsCount</span><small>Periodicals</small> </div>
         <hr style="margin-bottom:0px;background-color:#ccdede" />
-        <div style="color:#4c8a89"><span class="borrowerPeriodical" style="font-size:large">@Model.PeriodicalsCountBorrower </span><small> Borrower</small></div>
+        <div style="color:#4c8a89"><span class="borrowerPeriodical" style="font-size:large" data-animate-number>@Model.PeriodicalsCountBorrower </span><small> Borrower</small></div>
     </div>
 </div>
 <i class=""></i>
 <br /><br />
+
+@section header{
+
+    <style>
+
+
+
+    </style>
+
+}
+
+@section scripts{
+
+    <script>
+
+        (function () {
+
+            $(function () {
+
+
+
+            });
+
+        })();
+
+    </script>
+
+}
