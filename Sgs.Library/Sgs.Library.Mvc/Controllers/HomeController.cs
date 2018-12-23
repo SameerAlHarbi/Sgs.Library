@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sgs.Library.BusinessLogic;
-using Sgs.Library.Mvc.Services;
 using Sgs.Library.Mvc.ViewModels.Home;
-using System.Linq;
 
 namespace Sgs.Library.Mvc.Controllers
 {
@@ -33,5 +31,6 @@ namespace Sgs.Library.Mvc.Controllers
             };
             return View(vm);
         }
+
     }
 }

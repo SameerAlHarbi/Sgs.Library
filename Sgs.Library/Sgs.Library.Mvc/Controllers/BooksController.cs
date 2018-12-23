@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Sgs.Library.BusinessLogic;
-using System.Threading.Tasks;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System;
-using Sgs.Library.Mvc.ViewModels;
-using Sgs.Library.Model;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Logging;
 using Sameer.Shared.Data;
+using Sgs.Library.BusinessLogic;
+using Sgs.Library.Model;
+using Sgs.Library.Mvc.ViewModels;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace Sgs.Library.Mvc.Controllers
 {
