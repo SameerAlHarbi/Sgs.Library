@@ -79,14 +79,85 @@ namespace Sgs.Library.Mvc.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(string code)
+        {
+            try
+            {
+                var currentBook = await _booksManager.GetBookByCode(code);
+
+                if (currentBook == null)
+                {
+                    return NotFound();
+                }
+
+                return View(_mapper.Map<BookViewModel>(currentBook));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string code,BookViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _logger.LogInformation($"Updating book with code of {code}");
+
+                    using (_booksManager)
+                    {
+                        var currentData = await _booksManager.GetBookByCode(code);
+                        if (currentData == null)
+                        {
+                            _logger.LogWarning($"Can't find book with code of {code}");
+                            return NotFound();
+                        }
+
+                        _mapper.Map(model, currentData);
+
+                        var updateResult = await _booksManager.UpdateItemAsync(currentData);
+                        if (updateResult.Status == RepositoryActionStatus.Updated)
+                        {
+                            _logger.LogInformation("Book updated successfully.");
+                            return RedirectToAction(nameof(Index));
+                        }
+                        else
+                        {
+                            _logger.LogWarning("Could not update book to the database !");
+                            ModelState.AddModelError(string.Empty, "Update error please try again later !");
+                        }
+
+                    }
+
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationException ex)
+                {
+                    _logger.LogWarning($"validation exception while edit book : {ex.ValidationResult.ErrorMessage}");
+                    ModelState.AddModelError("", ex.ValidationResult.ErrorMessage);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Throw exception while edit book : {ex}");
+                    ModelState.AddModelError("", "Error happend");
+                }
+            }
+
+            return View();
+        }
+
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> VerifyCode(string code, int id = 0)
         {
             try
             {
-                var book = await _booksManager
-                    .GetAll(b => b.Code.Trim().ToUpper() == code.Trim().ToUpper())
-                    .FirstOrDefaultAsync();
+                var book = await _booksManager.GetBookByCode(code);
+
                 if (book != null && book.Id != id)
                 {
                     return Json($"Sorry book code - {code} is already registered !");

@@ -9,6 +9,12 @@ namespace Sgs.Library.DataAccess
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.EnableSensitiveDataLogging(true);
+        }
+
         public DbSet<Book> Books { get; set; }
 
         public DbSet<Map> Maps { get; set; }

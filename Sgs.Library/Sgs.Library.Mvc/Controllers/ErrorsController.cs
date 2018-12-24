@@ -39,6 +39,7 @@ namespace Sgs.Library.Mvc.Controllers
             {
                 case 404:
                     this._logger.LogError($"Request {statusCodeData.OriginalPath} - {statusCodeData.OriginalPathBase} - {statusCodeData.OriginalQueryString} not found");
+                    ViewBag.StatusCode = statusCode;
                     ViewBag.ErrorMessage = $"Sorry the page you requested could not be found .{statusCodeData.OriginalPath} - {statusCodeData.OriginalPathBase} - {statusCodeData.OriginalQueryString}";
                     ViewBag.RouteOfException = statusCodeData.OriginalPath;
                     break;

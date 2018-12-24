@@ -74,7 +74,7 @@ namespace Sgs.Library.Mvc
 
         private void configureRoute(IRouteBuilder routeBuilder)
         {
-            routeBuilder.MapRoute("Default", "{controller=home}/{action=index}/{id?}");
+            routeBuilder.MapRoute("Default", "{controller=home}/{action=index}/{code?}");
         }
     }
 }
