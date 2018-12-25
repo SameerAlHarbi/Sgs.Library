@@ -28,9 +28,32 @@ namespace Sgs.Library.Mvc.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+                return BadRequest();
+
+            try
+            {
+                var currentBook = await _booksManager.GetBookByCode(code);
+
+                if (currentBook == null)
+                {
+                    return NotFound();
+                }
+
+                return View(_mapper.Map<BookViewModel>(currentBook));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(new BookViewModel());
         }
 
         [HttpPost]
@@ -53,7 +76,7 @@ namespace Sgs.Library.Mvc.Controllers
                         if (saveResult.Status == RepositoryActionStatus.Created)
                         {
                             _logger.LogInformation("Book created successfully.");
-                            return RedirectToAction(nameof(BooksController.Index));
+                            return RedirectToAction(nameof(BooksController.Details),new { code = model.Code});
                         }
                         else
                         {
@@ -130,17 +153,14 @@ namespace Sgs.Library.Mvc.Controllers
                         if (updateResult.Status == RepositoryActionStatus.Updated)
                         {
                             _logger.LogInformation("Book updated successfully.");
-                            return RedirectToAction(nameof(Index));
+                            return RedirectToAction(nameof(Details),new { code });
                         }
                         else
                         {
                             _logger.LogWarning("Could not update book to the database !");
                             ModelState.AddModelError(string.Empty, "Update error please try again later !");
                         }
-
                     }
-
-                    return RedirectToAction(nameof(Index));
                 }
                 catch (ValidationException ex)
                 {
@@ -154,7 +174,75 @@ namespace Sgs.Library.Mvc.Controllers
                 }
             }
 
-            return View();
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmDelete(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+                return BadRequest();
+
+            try
+            {
+                var currentBook = await _booksManager.GetBookByCode(code);
+
+                if (currentBook == null)
+                {
+                    return NotFound();
+                }
+
+                return View(_mapper.Map<BookViewModel>(currentBook));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+                return BadRequest();
+
+            try
+            {
+                _logger.LogInformation($"Deleting book with code of {code}");
+
+                using (_booksManager)
+                {
+                    var currentData = await _booksManager.GetBookByCode(code);
+                    if (currentData == null)
+                    {
+                        _logger.LogWarning($"Can't find book with code of {code}");
+                        return NotFound();
+                    }
+
+                    var deleteResult = await _booksManager.DeleteItemAsync(currentData.Id);
+                    if (deleteResult.Status == RepositoryActionStatus.Deleted)
+                    {
+                        _logger.LogInformation("Book deleted successfully.");
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Could not delete book from the database !");
+                        return BadRequest();
+                    }
+
+                }
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogWarning($"validation exception while delete book : {ex.ValidationResult.ErrorMessage}");
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Throw exception while delete book : {ex}");
+                throw ex;
+            }
         }
 
         [AcceptVerbs("Get", "Post")]
@@ -175,5 +263,6 @@ namespace Sgs.Library.Mvc.Controllers
                 return Json("validation error ...!!");
             }
         }
+
     }
 }
