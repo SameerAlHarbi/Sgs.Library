@@ -82,6 +82,9 @@ namespace Sgs.Library.Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string code)
         {
+            if (string.IsNullOrWhiteSpace(code))
+                return BadRequest();
+
             try
             {
                 var currentBook = await _booksManager.GetBookByCode(code);
@@ -103,6 +106,9 @@ namespace Sgs.Library.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string code,BookViewModel model)
         {
+            if (string.IsNullOrWhiteSpace(code))
+                return BadRequest();
+
             if (ModelState.IsValid)
             {
                 try
