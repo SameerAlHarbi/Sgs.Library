@@ -7,6 +7,7 @@ using Sgs.Library.BusinessLogic;
 using Sgs.Library.Model;
 using Sgs.Library.Mvc.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -20,22 +21,25 @@ namespace Sgs.Library.Mvc.Controllers
             _booksManager = booksManager;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index()
         {
-            //var booksList = await _booksManager.GetAllAsNoTrackingListAsync();
-            //return View(booksList);
             return View();
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(string code)
+        public async Task<IActionResult> IndexAsync()
         {
-            if (string.IsNullOrWhiteSpace(code))
-                return BadRequest();
+            var booksList = await _booksManager.GetAllAsNoTrackingListAsync();
+            return View(_mapper.Map<List<BookViewModel>>(booksList));
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
             try
             {
-                var currentBook = await _booksManager.GetBookByCode(code);
+                var currentBook = await _booksManager.GetByIdAsync(id);
 
                 if (currentBook == null)
                 {
@@ -76,7 +80,7 @@ namespace Sgs.Library.Mvc.Controllers
                         if (saveResult.Status == RepositoryActionStatus.Created)
                         {
                             _logger.LogInformation("Book created successfully.");
-                            return RedirectToAction(nameof(BooksController.Details),new { code = model.Code});
+                            return RedirectToAction(nameof(Details),new { id = newData.Id});
                         }
                         else
                         {
@@ -103,14 +107,11 @@ namespace Sgs.Library.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string code)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (string.IsNullOrWhiteSpace(code))
-                return BadRequest();
-
             try
             {
-                var currentBook = await _booksManager.GetBookByCode(code);
+                var currentBook = await _booksManager.GetByIdAsync(id);
 
                 if (currentBook == null)
                 {
@@ -127,23 +128,20 @@ namespace Sgs.Library.Mvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string code,BookViewModel model)
+        public async Task<IActionResult> Edit(int id,BookViewModel model)
         {
-            if (string.IsNullOrWhiteSpace(code))
-                return BadRequest();
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _logger.LogInformation($"Updating book with code of {code}");
+                    _logger.LogInformation($"Updating book with id of {id}");
 
                     using (_booksManager)
                     {
-                        var currentData = await _booksManager.GetBookByCode(code);
+                        var currentData = await _booksManager.GetByIdAsync(id);
                         if (currentData == null)
                         {
-                            _logger.LogWarning($"Can't find book with code of {code}");
+                            _logger.LogWarning($"Can't find book with id of {id}");
                             return NotFound();
                         }
 
@@ -153,7 +151,7 @@ namespace Sgs.Library.Mvc.Controllers
                         if (updateResult.Status == RepositoryActionStatus.Updated)
                         {
                             _logger.LogInformation("Book updated successfully.");
-                            return RedirectToAction(nameof(Details),new { code });
+                            return RedirectToAction(nameof(Details),new { id });
                         }
                         else
                         {
@@ -178,14 +176,11 @@ namespace Sgs.Library.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmDelete(string code)
+        public async Task<IActionResult> ConfirmDelete(int id)
         {
-            if (string.IsNullOrWhiteSpace(code))
-                return BadRequest();
-
             try
             {
-                var currentBook = await _booksManager.GetBookByCode(code);
+                var currentBook = await _booksManager.GetByIdAsync(id);
 
                 if (currentBook == null)
                 {
@@ -201,21 +196,18 @@ namespace Sgs.Library.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string code)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (string.IsNullOrWhiteSpace(code))
-                return BadRequest();
-
             try
             {
-                _logger.LogInformation($"Deleting book with code of {code}");
+                _logger.LogInformation($"Deleting book with id of {id}");
 
                 using (_booksManager)
                 {
-                    var currentData = await _booksManager.GetBookByCode(code);
+                    var currentData = await _booksManager.GetByIdAsync(id);
                     if (currentData == null)
                     {
-                        _logger.LogWarning($"Can't find book with code of {code}");
+                        _logger.LogWarning($"Can't find book with id of {id}");
                         return NotFound();
                     }
 

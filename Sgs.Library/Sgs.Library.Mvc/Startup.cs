@@ -9,6 +9,7 @@ using Sameer.Shared.Data;
 using Sameer.Shared.Helpers.Mvc;
 using Sgs.Library.BusinessLogic;
 using Sgs.Library.DataAccess;
+using Sgs.Library.Model;
 using Sgs.Library.Mvc.Services;
 
 namespace Sgs.Library.Mvc
@@ -36,6 +37,9 @@ namespace Sgs.Library.Mvc
             services.AddScoped<BooksManager>();
             services.AddScoped<MapsManager>();
             services.AddScoped<ReportsManager>();
+
+            services.AddScoped<GeneralManager<Report>,ReportsManager>();
+
             services.AddScoped<PeriodicalsManager>();
             services.AddScoped<BorrowingsManager>();
             services.AddScoped<MapsTypesManager>();
@@ -74,7 +78,7 @@ namespace Sgs.Library.Mvc
 
         private void configureRoute(IRouteBuilder routeBuilder)
         {
-            routeBuilder.MapRoute("Default", "{controller=home}/{action=index}/{code?}");
+            routeBuilder.MapRoute("Default", "{controller=home}/{action=index}/{id?}");
         }
     }
 }

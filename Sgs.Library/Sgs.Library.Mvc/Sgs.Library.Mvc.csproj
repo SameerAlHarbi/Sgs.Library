@@ -486,4 +486,8 @@
     <ProjectReference Include="..\Sgs.Library.Model\Sgs.Library.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Reports\" />
+  </ItemGroup>
+
 </Project>
