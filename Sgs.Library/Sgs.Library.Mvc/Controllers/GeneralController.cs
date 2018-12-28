@@ -13,7 +13,6 @@ namespace Sgs.Library.Mvc.Controllers
 {
     public class GeneralController<M,VM> : Controller where M:class,ISameerObject,new() where VM:class,new()
     {
- 
         protected readonly string _objectTypeName;
         protected IMapper _mapper;
         protected ILogger _logger;
@@ -175,9 +174,9 @@ namespace Sgs.Library.Mvc.Controllers
             }
         }
 
-        protected virtual async Task<M> CreateObject()
+        protected virtual async Task<M> createObject()
         {
-            return new M();
+            return await Task.FromResult(new M());
         }
 
         [HttpGet]
@@ -185,7 +184,7 @@ namespace Sgs.Library.Mvc.Controllers
         {
             try
             {
-                return View(await CreateObject());
+                return View(await createObject());
             }
             catch (Exception)
             {
@@ -203,26 +202,40 @@ namespace Sgs.Library.Mvc.Controllers
                 {
                     _logger.LogInformation(creatingNewDataMessage);
 
-                    var newData = _mapper.Map<M>(model);
-
-                    using (_dataManager)
+                    var validationResults = await checkNewData(model);
+                    if (validationResults.Any())
                     {
-
-                        var saveResult = await _dataManager.InsertNewAsync(newData);
-
-                        if (saveResult.Status == RepositoryActionStatus.Created)
+                        foreach (var vr in validationResults)
                         {
-                            _logger.LogInformation(creatingNewDataSuccessfullMessage);
-                            return CreateSucceededResult(saveResult.Entity);
+                            foreach (var mn in vr.MemberNames)
+                            {
+                                _logger.LogWarning($"validation exception while saving new {_objectTypeName} :member name : {mn} error : {vr.ErrorMessage}");
+                                ModelState.AddModelError(mn, vr.ErrorMessage);
+                            }
                         }
-                        else
-                        {
-                            _logger.LogWarning(creatingNewDataFailMessage);
-                            ModelState.AddModelError(string.Empty, saveErrorMessage);
-                        }
-
                     }
+                    else
+                    {
+                        var newData = _mapper.Map<M>(model);
 
+                        using (_dataManager)
+                        {
+
+                            var saveResult = await _dataManager.InsertNewAsync(newData);
+
+                            if (saveResult.Status == RepositoryActionStatus.Created)
+                            {
+                                _logger.LogInformation(creatingNewDataSuccessfullMessage);
+                                return createSucceededResult(saveResult.Entity);
+                            }
+                            else
+                            {
+                                _logger.LogWarning(creatingNewDataFailMessage);
+                                ModelState.AddModelError(string.Empty, saveErrorMessage);
+                            }
+
+                        }
+                    }
                 }
                 catch (ValidationException ex)
                 {
@@ -239,7 +252,12 @@ namespace Sgs.Library.Mvc.Controllers
             return View(model);
         }
 
-        protected virtual IActionResult CreateSucceededResult(M newData)
+        protected virtual async Task<List<ValidationResult>> checkNewData(VM newData)
+        {
+            return await Task.FromResult(new List<ValidationResult>());
+        }
+
+        protected virtual IActionResult createSucceededResult(M newData)
         {
             return RedirectToAction(nameof(Details), new { id = newData.Id });
         }
@@ -283,19 +301,34 @@ namespace Sgs.Library.Mvc.Controllers
                             return NotFound();
                         }
 
-                        _mapper.Map(model, currentData);
-
-                        var updateResult = await _dataManager.UpdateItemAsync(currentData);
-                        if (updateResult.Status == RepositoryActionStatus.Updated)
+                        var validationResults = await checkEditData(currentData,model);
+                        if (validationResults.Any())
                         {
-                            _logger.LogInformation(updatingDataSuccessfullMessage);
-                            return updateSucceededResult(updateResult.Entity);
+                            foreach (var vr in validationResults)
+                            {
+                                foreach (var mn in vr.MemberNames)
+                                {
+                                    _logger.LogWarning($"validation exception while updating {_objectTypeName} :member name : {mn} error : {vr.ErrorMessage}");
+                                    ModelState.AddModelError(mn, vr.ErrorMessage);
+                                }
+                            }
                         }
                         else
                         {
-                            _logger.LogWarning(updatingDataFailMessage);
-                            ModelState.AddModelError(string.Empty, saveErrorMessage);
-                        }
+                            _mapper.Map(model, currentData);
+
+                            var updateResult = await _dataManager.UpdateItemAsync(currentData);
+                            if (updateResult.Status == RepositoryActionStatus.Updated)
+                            {
+                                _logger.LogInformation(updatingDataSuccessfullMessage);
+                                return editSucceededResult(updateResult.Entity);
+                            }
+                            else
+                            {
+                                _logger.LogWarning(updatingDataFailMessage);
+                                ModelState.AddModelError(string.Empty, saveErrorMessage);
+                            }
+                        }                       
                     }
                 }
                 catch (ValidationException ex)
@@ -313,7 +346,12 @@ namespace Sgs.Library.Mvc.Controllers
             return View(model);
         }
 
-        protected virtual IActionResult updateSucceededResult(M currentData)
+        protected virtual async Task<List<ValidationResult>> checkEditData(M currentData,VM newData)
+        {
+            return await Task.FromResult(new List<ValidationResult>());
+        }
+
+        protected virtual IActionResult editSucceededResult(M currentData)
         {
             return RedirectToAction(nameof(Details), new { id = currentData.Id });
         }
@@ -354,18 +392,32 @@ namespace Sgs.Library.Mvc.Controllers
                         return NotFound();
                     }
 
-                    var deleteResult = await _dataManager.DeleteItemAsync(currentData.Id);
-                    if (deleteResult.Status == RepositoryActionStatus.Deleted)
+                    var validationResults = await checkDeleteData(currentData);
+                    if (validationResults.Any())
                     {
-                        _logger.LogInformation(deletingDataSuccessfullMessage);
-                        return deleteSucceededResult();
+                        foreach (var vr in validationResults)
+                        {
+                            foreach (var mn in vr.MemberNames)
+                            {
+                                _logger.LogWarning($"validation exception while deleting {_objectTypeName} :member name : {mn} error : {vr.ErrorMessage}");
+                            }
+                        }
+                        return BadRequest();
                     }
                     else
                     {
-                        _logger.LogWarning(deletingDataFailMessage);
-                        return BadRequest();
+                        var deleteResult = await _dataManager.DeleteItemAsync(currentData.Id);
+                        if (deleteResult.Status == RepositoryActionStatus.Deleted)
+                        {
+                            _logger.LogInformation(deletingDataSuccessfullMessage);
+                            return deleteSucceededResult();
+                        }
+                        else
+                        {
+                            _logger.LogWarning(deletingDataFailMessage);
+                            return BadRequest();
+                        }
                     }
-
                 }
             }
             catch (ValidationException ex)
@@ -378,6 +430,11 @@ namespace Sgs.Library.Mvc.Controllers
                 _logger.LogError($"Throw exception while delete {_objectTypeName} : {ex}");
                 throw ex;
             }
+        }
+
+        protected virtual async Task<List<ValidationResult>> checkDeleteData(M currentData)
+        {
+            return await Task.FromResult(new List<ValidationResult>());
         }
 
         protected virtual IActionResult deleteSucceededResult()
