@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Sgs.Library.Mvc.Controllers
 {
-    public class GeneralController<M,VM> : Controller where M:class,ISameerObject,new() where VM:class,new()
+    public class GeneralMvcController<M,VM> : Controller where M:class,ISameerObject,new() where VM:class,new()
     {
         protected readonly string _objectTypeName;
         protected IMapper _mapper;
         protected ILogger _logger;
-        protected GeneralManager<M>  _dataManager;
+        protected IDataManager<M>  _dataManager;
 
         #region Data Messages
 
@@ -125,7 +125,7 @@ namespace Sgs.Library.Mvc.Controllers
 
         #endregion
 
-        public GeneralController(string objectTypeName,GeneralManager<M> dataManager
+        public GeneralMvcController(string objectTypeName,IDataManager<M> dataManager
             , IMapper mapper, ILogger logger)
         {
             _objectTypeName = objectTypeName;
@@ -145,7 +145,7 @@ namespace Sgs.Library.Mvc.Controllers
         {
             try
             {
-                var allDataList = await _dataManager.GetAllAsNoTrackingListAsync();
+                var allDataList = await _dataManager.GetAllDataList();
                 return View(_mapper.Map<List<VM>>(allDataList));
             }
             catch (Exception)
@@ -159,7 +159,7 @@ namespace Sgs.Library.Mvc.Controllers
         {
             try
             {
-                var currentData = await _dataManager.GetByIdAsync(id);
+                var currentData = await _dataManager.GetDataById(id);
 
                 if (currentData == null)
                 {
@@ -221,7 +221,7 @@ namespace Sgs.Library.Mvc.Controllers
                         using (_dataManager)
                         {
 
-                            var saveResult = await _dataManager.InsertNewAsync(newData);
+                            var saveResult = await _dataManager.InsertNewDataItem(newData);
 
                             if (saveResult.Status == RepositoryActionStatus.Created)
                             {
@@ -267,7 +267,7 @@ namespace Sgs.Library.Mvc.Controllers
         {
             try
             {
-                var currentData = await _dataManager.GetByIdAsync(id);
+                var currentData = await _dataManager.GetDataById(id);
 
                 if (currentData == null)
                 {
@@ -294,7 +294,7 @@ namespace Sgs.Library.Mvc.Controllers
 
                     using (_dataManager)
                     {
-                        var currentData = await _dataManager.GetByIdAsync(id);
+                        var currentData = await _dataManager.GetDataById(id);
                         if (currentData == null)
                         {
                             _logger.LogWarning(getDataNotFoundMessage(id));
@@ -317,7 +317,7 @@ namespace Sgs.Library.Mvc.Controllers
                         {
                             _mapper.Map(model, currentData);
 
-                            var updateResult = await _dataManager.UpdateItemAsync(currentData);
+                            var updateResult = await _dataManager.UpdateDataItem(currentData);
                             if (updateResult.Status == RepositoryActionStatus.Updated)
                             {
                                 _logger.LogInformation(updatingDataSuccessfullMessage);
@@ -361,7 +361,7 @@ namespace Sgs.Library.Mvc.Controllers
         {
             try
             {
-                var currentData = await _dataManager.GetByIdAsync(id);
+                var currentData = await _dataManager.GetDataById(id);
 
                 if (currentData == null)
                 {
@@ -385,7 +385,7 @@ namespace Sgs.Library.Mvc.Controllers
 
                 using (_dataManager)
                 {
-                    var currentData = await _dataManager.GetByIdAsync(id);
+                    var currentData = await _dataManager.GetDataById(id);
                     if (currentData == null)
                     {
                         _logger.LogWarning(getDataNotFoundMessage(id));
@@ -406,7 +406,7 @@ namespace Sgs.Library.Mvc.Controllers
                     }
                     else
                     {
-                        var deleteResult = await _dataManager.DeleteItemAsync(currentData.Id);
+                        var deleteResult = await _dataManager.DeleteDataItem(currentData.Id);
                         if (deleteResult.Status == RepositoryActionStatus.Deleted)
                         {
                             _logger.LogInformation(deletingDataSuccessfullMessage);

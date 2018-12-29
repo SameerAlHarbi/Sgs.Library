@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sameer.Shared;
 using Sameer.Shared.Data;
 using Sameer.Shared.Helpers.Mvc;
 using Sgs.Library.BusinessLogic;
@@ -35,15 +36,17 @@ namespace Sgs.Library.Mvc
             services.AddScoped<IRepository, Repository<LibraryDB>>();
 
             services.AddScoped<BooksManager>();
-            services.AddScoped<MapsManager>();
-            services.AddScoped<ReportsManager>();
+            //services.AddScoped<MapsManager>();
+            //services.AddScoped<ReportsManager>();
+            //services.AddScoped<GeneralManager<Report>>();
+            services.AddScoped(typeof(IDataManager<>),typeof(GeneralManager<>));
+            services.AddScoped(typeof(GeneralManager<>));
 
-            services.AddScoped<GeneralManager<Report>,ReportsManager>();
+            //services.AddScoped<PeriodicalsManager>();
+            //services.AddScoped<BorrowingsManager>();
+            //services.AddScoped<MapsTypesManager>();
+            //services.AddScoped<ReportsTypesManager>();
 
-            services.AddScoped<PeriodicalsManager>();
-            services.AddScoped<BorrowingsManager>();
-            services.AddScoped<MapsTypesManager>();
-            services.AddScoped<ReportsTypesManager>();
             services.AddSingleton<IAppInfo, AppInfoManager>();
 
             // Add application services.

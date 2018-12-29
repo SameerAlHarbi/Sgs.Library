@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Sameer.Shared;
 using Sameer.Shared.Data;
 using Sgs.Library.BusinessLogic;
 using Sgs.Library.Model;
@@ -15,8 +16,8 @@ namespace Sgs.Library.Mvc.Controllers
 {
     public class BooksController : BaseController
     {
-        private readonly BooksManager _booksManager;
-        public BooksController(BooksManager booksManager, IMapper mapper, ILogger<BooksController> logger) : base(mapper, logger)
+        private readonly GeneralManager<Book> _booksManager;
+        public BooksController(GeneralManager<Book> booksManager, IMapper mapper, ILogger<BooksController> logger) : base(mapper, logger)
         {
             _booksManager = booksManager;
         }
@@ -237,24 +238,24 @@ namespace Sgs.Library.Mvc.Controllers
             }
         }
 
-        [AcceptVerbs("Get", "Post")]
-        public async Task<IActionResult> VerifyCode(string code, int id = 0)
-        {
-            try
-            {
-                var book = await _booksManager.GetBookByCode(code);
+        //[AcceptVerbs("Get", "Post")]
+        //public async Task<IActionResult> VerifyCode(string code, int id = 0)
+        //{
+        //    try
+        //    {
+        //        var book = await _booksManager.GetBookByCode(code);
 
-                if (book != null && book.Id != id)
-                {
-                    return Json($"Sorry book code - {code} is already registered !");
-                }
-                return Json(true);
-            }
-            catch (Exception)
-            {
-                return Json("validation error ...!!");
-            }
-        }
+        //        if (book != null && book.Id != id)
+        //        {
+        //            return Json($"Sorry book code - {code} is already registered !");
+        //        }
+        //        return Json(true);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Json("validation error ...!!");
+        //    }
+        //}
 
     }
 }
