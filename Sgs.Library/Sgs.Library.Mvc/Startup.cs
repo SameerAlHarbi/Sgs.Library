@@ -12,6 +12,8 @@ using Sgs.Library.BusinessLogic;
 using Sgs.Library.DataAccess;
 using Sgs.Library.Model;
 using Sgs.Library.Mvc.Services;
+using Sgs.Library.Mvc.Extensions;
+using System.Reflection;
 
 namespace Sgs.Library.Mvc
 {
@@ -30,22 +32,7 @@ namespace Sgs.Library.Mvc
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<LibraryDB>(options => options.UseSqlServer(_config.GetConnectionString("DefaultConnection"))
-            ,ServiceLifetime.Scoped);
-
-            services.AddScoped<IRepository, Repository<LibraryDB>>();
-
-            services.AddScoped<BooksManager>();
-            //services.AddScoped<MapsManager>();
-            //services.AddScoped<ReportsManager>();
-            //services.AddScoped<GeneralManager<Report>>();
-            services.AddScoped(typeof(IDataManager<>),typeof(GeneralManager<>));
-            services.AddScoped(typeof(GeneralManager<>));
-
-            //services.AddScoped<PeriodicalsManager>();
-            //services.AddScoped<BorrowingsManager>();
-            //services.AddScoped<MapsTypesManager>();
-            //services.AddScoped<ReportsTypesManager>();
+            services.AddSameerDbDataManagers<LibraryDB>(_config);
 
             services.AddSingleton<IAppInfo, AppInfoManager>();
 
