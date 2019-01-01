@@ -28,7 +28,7 @@ namespace Sgs.Library.Mvc.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("IndexAsync")]
         public async Task<IActionResult> IndexAsync()
         {
             var booksList = await _booksManager.GetAllAsNoTrackingListAsync();
