@@ -3,28 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sameer.Shared;
 using Sameer.Shared.Data;
-using Sgs.Library.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Sgs.Library.Mvc.Extensions
 {
-
-    public class MyOptions
-    {
-        public MyOptions()
-        {
-            // Set default value.
-            Option1 = "value1_from_ctor";
-        }
-
-        public string Option1 { get; set; }
-        public int Option2 { get; set; } = 5;
-    }
-
     public static class DataManagersExtensions
     {
         public static void AddSameerDbDataManagers<T>(this IServiceCollection services
@@ -49,8 +34,6 @@ namespace Sgs.Library.Mvc.Extensions
 
             foreach (var type in typesFromAssemblies)
                 services.Add(new ServiceDescriptor(type, type, lifetime));
-
-            services.Configure<MyOptions>(configuration);
         }
 
         private static bool isSubclassOf(Type type, Type baseType)
