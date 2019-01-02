@@ -10,7 +10,7 @@ namespace Sgs.Library.Mvc.Controllers
     public class ReportsController : GeneralMvcController<Report, ReportViewModel>
     {
         public ReportsController(GeneralManager<Report> dataManager, IMapper mapper, ILogger<ReportsController> logger) 
-            : base("Report", dataManager, mapper, logger)
+            : base(dataManager, mapper, logger)
         {
         }
     }

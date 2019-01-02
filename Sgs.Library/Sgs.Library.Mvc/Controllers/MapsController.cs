@@ -13,7 +13,7 @@ namespace Sgs.Library.Mvc.Controllers
 {
     public class MapsController : GeneralMvcController<Map, MapViewModel>
     {
-        public MapsController(MapsManager dataManager, IMapper mapper, ILogger logger) : base("Map", dataManager, mapper, logger)
+        public MapsController(MapsManager dataManager, IMapper mapper, ILogger logger) : base(dataManager, mapper, logger)
         {
         }
     }
