@@ -476,7 +476,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="Sameer.Shared" Version="1.5.0" />
-    <PackageReference Include="Sameer.Shared.Data" Version="1.6.0" />
+    <PackageReference Include="Sameer.Shared.Data" Version="1.7.0" />
     <PackageReference Include="Sameer.Shared.Helpers.Mvc" Version="2.0.0" />
   </ItemGroup>
 

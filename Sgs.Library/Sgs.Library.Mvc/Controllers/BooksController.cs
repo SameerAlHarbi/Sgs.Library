@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sameer.Shared;
 using Sameer.Shared.Data;
-using Sgs.Library.BusinessLogic;
 using Sgs.Library.Model;
 using Sgs.Library.Mvc.ViewModels;
 using System;

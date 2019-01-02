@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "EnvironmentsSample": {
+    "LibraryProduction": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

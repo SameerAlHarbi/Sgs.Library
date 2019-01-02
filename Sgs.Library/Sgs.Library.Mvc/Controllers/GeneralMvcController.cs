@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sameer.Shared;
-using Sameer.Shared.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -140,7 +139,7 @@ namespace Sgs.Library.Mvc.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("IndexAsync")]
         public virtual async Task<IActionResult> IndexAsync()
         {
             try
