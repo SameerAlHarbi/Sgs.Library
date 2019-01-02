@@ -2,18 +2,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sameer.Shared;
 using Sameer.Shared.Data;
 using Sameer.Shared.Helpers.Mvc;
-using Sgs.Library.BusinessLogic;
 using Sgs.Library.DataAccess;
-using Sgs.Library.Model;
 using Sgs.Library.Mvc.Services;
-using Sgs.Library.Mvc.Extensions;
-using System.Reflection;
 
 namespace Sgs.Library.Mvc
 {
