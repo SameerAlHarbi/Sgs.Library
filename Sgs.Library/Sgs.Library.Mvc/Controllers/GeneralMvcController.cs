@@ -12,7 +12,9 @@ namespace Sgs.Library.Mvc.Controllers
 {
     public class GeneralMvcController<M,VM> : Controller where M:class,ISameerObject,new() where VM:class,new()
     {
-        protected readonly string _objectTypeName = typeof(M).Name;
+
+        protected virtual string _objectTypeName { get; set; } = typeof(M).Name;
+
         protected IMapper _mapper;
         protected ILogger _logger;
         protected IDataManager<M>  _dataManager;
